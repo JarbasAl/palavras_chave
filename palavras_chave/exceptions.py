@@ -1,7 +1,11 @@
 
-class NoModelAvailable(Exception):
+class ModelNotFound(Exception):
     pass
 
 
 class PhonemesNotProvided(Exception):
+    pass
+
+
+class UnsupportedPreciseVersion(Exception):
     pass

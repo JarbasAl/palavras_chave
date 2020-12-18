@@ -56,7 +56,7 @@ class NyumayaLegacyWakeWord(HotWordEngine):
         print("Nyumaya lib version: " + self.detector.version)
         self.expected_duration = 0.98  # buffer overflow if above this
 
-    def found_wake_word(self, frame_data):
+    def check_for_wake_word(self, frame_data):
         """ frame data contains audio data that needs to be checked for a wake
         word, you can process audio here or just return a result
         previously handled in update method """

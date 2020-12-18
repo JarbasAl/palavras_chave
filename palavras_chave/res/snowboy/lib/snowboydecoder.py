@@ -2,7 +2,7 @@
 import platform
 import os
 import logging
-from palavras_chave.exceptions import NoModelAvailable
+from palavras_chave.exceptions import ModelNotFound
 from os.path import isfile, join, expanduser, dirname
 
 # create logger
@@ -50,7 +50,7 @@ def find_model(model):
         # personal model found
         model = model_no_ext + ".pmdl"
     else:
-        raise NoModelAvailable("could not find " + model)
+        raise ModelNotFound("could not find " + model)
     return model
 
 

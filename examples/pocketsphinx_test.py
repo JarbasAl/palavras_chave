@@ -44,6 +44,9 @@ stream = audio.open(
 )
 
 found = False
+
+print("Waiting for wake word")
+
 for i in range(0, int(RATE / CHUNK * MAX_RECORD_SECONDS)):
     data = stream.read(CHUNK)
 

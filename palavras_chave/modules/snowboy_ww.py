@@ -11,7 +11,7 @@
 # limitations under the License.
 #
 from palavras_chave.modules import HotWordEngine
-from palavras_chave.exceptions import NoModelAvailable
+from palavras_chave.exceptions import ModelNotFound
 from palavras_chave.res.snowboy.lib.snowboydecoder import get_detector, \
     find_model
 
@@ -23,7 +23,7 @@ class SnowboyHotWord(HotWordEngine):
         # load models
         models = self.config.get("models") or [{"model_path": key_phrase}]
         if not len(models):
-            raise NoModelAvailable
+            raise ModelNotFound
         paths = []
         sensitivities = []
         for model in models:
@@ -35,7 +35,7 @@ class SnowboyHotWord(HotWordEngine):
         # load snowboy
         self.snowboy = get_detector(paths, sensitivity=sensitivities)
 
-    def found_wake_word(self, frame_data):
+    def check_for_wake_word(self, frame_data):
         wake_word = self.snowboy.RunDetection(frame_data)
         return wake_word >= 1
 

@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from palavras_chave.exceptions import NoModelAvailable, PhonemesNotProvided
+from palavras_chave.exceptions import ModelNotFound, PhonemesNotProvided
 from palavras_chave.modules import HotWordEngine
 import os
 from os.path import join, dirname
@@ -34,7 +34,7 @@ class PocketsphinxHotWord(HotWordEngine):
         if not self.hmm and self.lang.startswith("en"):
             self.hmm = self.get_default_english_model()
         else:
-            raise NoModelAvailable("No pocketsphinx hmm model provided")
+            raise ModelNotFound("No pocketsphinx hmm model provided")
         # read user params
         # TODO threshold is a bitch to automate, maybe raise exception ?
         self.threshold = self.config.get("threshold", 1e-90)
@@ -71,12 +71,12 @@ class PocketsphinxHotWord(HotWordEngine):
         try:
             import speech_recognition as sr
         except ImportError:
-            raise NoModelAvailable("No pocketsphinx hmm model provided")
+            raise ModelNotFound("No pocketsphinx hmm model provided")
         language_directory = join(dirname(sr.__file__),
                                   "pocketsphinx-data", "en-US")
         return join(language_directory, "acoustic-model")
 
-    def found_wake_word(self, frame_data):
+    def check_for_wake_word(self, frame_data):
         self.decoder.start_utt()
         self.decoder.process_raw(frame_data, False, False)
         self.decoder.end_utt()

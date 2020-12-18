@@ -29,7 +29,7 @@ class NyumayaWakeWord(HotWordEngine):
         self.labels = config.get("labels")
 
         model = config.get("model", "alexa")
-        models_folder = join(RESOURCES_FOLDER, "nyumaya", "models", "hotwords")
+        models_folder = join(RESOURCES_FOLDER, "nyumaya", "models")
         if model == "alexa":
             self.model = join(models_folder, "alexa_v1.0.0.premium")
         elif model == "marvin":
@@ -38,6 +38,8 @@ class NyumayaWakeWord(HotWordEngine):
             self.model = join(models_folder, "sheila_v1.0.0.premium")
         elif model == "firefox":
             self.model = join(models_folder, "firefox_v1.0.0.premium")
+        elif model == "stop":
+            self.model = join(models_folder, "stop_command.premium")
         elif exists(model):
             self.model = model
         elif exists(join(models_folder, model)):
@@ -50,7 +52,7 @@ class NyumayaWakeWord(HotWordEngine):
         self.bufsize = self.detector.get_input_data_size()
         print("Nyumaya lib version: " + self.detector.version)
 
-    def found_wake_word(self, frame_data):
+    def check_for_wake_word(self, frame_data):
         """ frame data contains audio data that needs to be checked for a wake
         word, you can process audio here or just return a result
         previously handled in update method """

@@ -24,7 +24,7 @@ class DummyWakeWord(HotWordEngine):
         self.signal_file = self.config.get("signal_file") or \
                            join(gettempdir(), "trigger_wakeword")
 
-    def found_wake_word(self, frame_data):
+    def check_for_wake_word(self, frame_data):
         """Check if wake word has been found.
 
         Checks if the wake word has been found. Should reset any internal

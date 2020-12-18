@@ -17,7 +17,9 @@ audio = pyaudio.PyAudio()
 # Wake word initialization
 config = {
     "models": [
-        {"model_path": "snowboy", "sensitivity": 0.5}  # bundled model
+        # bundled model name or full path
+        # bundled models: snowboy, computer, alexa, jarvis
+        {"model_path": "snowboy", "sensitivity": 0.5}
     ]
 }
 engine = SnowboyHotWord("snowboy", config=config)
@@ -37,6 +39,9 @@ stream = audio.open(
 )
 
 found = False
+
+print("Waiting for wake word")
+
 for i in range(0, int(RATE / CHUNK * MAX_RECORD_SECONDS)):
     data = stream.read(CHUNK)
 

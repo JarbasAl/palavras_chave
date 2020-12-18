@@ -1,5 +1,5 @@
 from palavras_chave.utils import msec_to_sec, get_phonemes
-
+import time
 
 class HotWordEngine:
     """Hotword/Wakeword base class to be implemented by all wake word plugins.
@@ -16,17 +16,24 @@ class HotWordEngine:
         config = config or {}
         self.config = config
         self.phonemes = config.get("phonemes") or get_phonemes(key_phrase)
-        self.num_phonemes = len(self.phonemes.split(" "))
+        num_phonemes = len(self.phonemes.split(" "))
         phoneme_duration = msec_to_sec(config.get('phoneme_duration', 120))
         self.expected_duration = self.config.get("expected_duration") or \
-                                 self.num_phonemes * phoneme_duration
+                                 num_phonemes * phoneme_duration
         # NOTE 0.98 was arbitrarily chosen because it corresponds to
         # nyumaya_legacy max buffer size, i don't think wakewords would fit
         # in less than this either way
         self.expected_duration = max(int(self.expected_duration), 0.98)
         self.lang = str(self.config.get("lang", lang)).lower()
+        self.min_time_between_checks = self.config.get(
+            "min_time_between_checks", 0.2)
+        self.last_check = time.time()
 
-    def found_wake_word(self, frame_data):
+    @property
+    def is_time_to_check(self):
+        return time.time() - self.last_check >= self.min_time_between_checks
+
+    def check_for_wake_word(self, frame_data):
         """Check if wake word has been found.
 
         Checks if the wake word has been found. Should reset any internal
@@ -40,6 +47,12 @@ class HotWordEngine:
         Returns:
             bool: True if a wake word was detected, else False
         """
+        return False
+
+    def found_wake_word(self, frame_data):
+        if self.is_time_to_check:
+            self.last_check = time.time()
+            return self.check_for_wake_word(frame_data)
         return False
 
     def update(self, chunk):

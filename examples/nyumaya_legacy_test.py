@@ -17,7 +17,9 @@ audio = pyaudio.PyAudio()
 
 # Wake word initialization
 config = {
-    "model": "alexa",  # bundled model
+    # bundled model name or full path
+    # bundled models: alexa, marvin, sheila, alexa_big, marvin_big, sheila_big
+    "model": "alexa",
     "sensitivity": 0.5,
     "extractor_gain": 1.0
 }
@@ -38,6 +40,9 @@ stream = audio.open(
 )
 
 found = False
+
+print("Waiting for wake word")
+
 for i in range(0, int(RATE / CHUNK * MAX_RECORD_SECONDS)):
     data = stream.read(CHUNK)
 
