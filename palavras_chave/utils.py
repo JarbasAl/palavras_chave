@@ -1,4 +1,3 @@
-import pronouncing
 import re
 
 
@@ -142,8 +141,6 @@ def get_phonemes(word):
         if total_phonemes[-1] == " . ":
             total_phonemes = total_phonemes[:-1]
         phonemes = "".join(total_phonemes)
-    elif len(pronouncing.phones_for_word(word)):
-        phonemes = "".join(pronouncing.phones_for_word(word)[0])
     else:
         guess = guess_phonemes(word)
         if guess is not None:
