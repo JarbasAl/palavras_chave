@@ -63,7 +63,7 @@ class PreciseHotword(HotWordEngine):
 
     @staticmethod
     def get_binary(version=0.2):
-        xdg_folder=BaseDirectory.xdg_data_home
+        xdg_folder = BaseDirectory.xdg_data_home
         base_url = "https://github.com/MycroftAI/mycroft-precise/releases/download/"
         if version == 0.2:
             base_url += "v0.2.0/precise-engine_0.2.0_{arch}.tar.gz"
