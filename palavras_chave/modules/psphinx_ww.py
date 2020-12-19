@@ -33,7 +33,7 @@ class PocketsphinxHotWord(HotWordEngine):
         self.hmm = self.config.get("hmm")
         if not self.hmm and self.lang.startswith("en"):
             self.hmm = self.get_default_english_model()
-        else:
+        elif not self.hmm:
             raise ModelNotFound("No pocketsphinx hmm model provided")
         # read user params
         # TODO threshold is a bitch to automate, maybe raise exception ?
