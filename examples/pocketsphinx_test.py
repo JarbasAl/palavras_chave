@@ -23,12 +23,11 @@ audio = pyaudio.PyAudio()
 # Wake word initialization
 
 config = {
-    "threshold": 1e-90,
-    "phonemes": "HH EY . M AY K R AO F T",
+    "threshold": 1e-40,
     "sample_rate": RATE
 }
-engine = PocketsphinxHotWord("hey mycroft", config=config)
-
+engine = PocketsphinxHotWord("andromeda", config=config)
+print(engine.phonemes)
 # used for non-streaming wakewords
 audio_buffer = CyclicAudioBuffer(engine.expected_duration,
                                  sample_rate=RATE,

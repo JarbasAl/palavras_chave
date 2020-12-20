@@ -1,11 +1,7 @@
-
-class ModelNotFound(Exception):
+class ModelNotFound(ValueError):
     pass
 
 
-class PhonemesNotProvided(Exception):
+class UnsupportedPreciseVersion(ValueError):
     pass
 
-
-class UnsupportedPreciseVersion(Exception):
-    pass

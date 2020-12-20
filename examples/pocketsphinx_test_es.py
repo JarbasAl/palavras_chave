@@ -10,19 +10,19 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 16000
 CHUNK = 1024
-MAX_RECORD_SECONDS = 3000
+MAX_RECORD_SECONDS = 30
 SAMPLE_WIDTH = pyaudio.get_sample_size(FORMAT)
 audio = pyaudio.PyAudio()
 
 # Wake word initialization
 
 config = {
-    "threshold": 1e-10,
-    "phonemes": "d i n o s a u r i o",
+    "threshold": 1e-15,
     "hmm": "/path/to/sourceforge/es-es/hmm/",
     "sample_rate": RATE
 }
 engine = PocketsphinxHotWord("dinosaurio", config=config, lang="es-es")
+print(engine.phonemes)
 
 # used for non-streaming wakewords
 audio_buffer = CyclicAudioBuffer(engine.expected_duration,

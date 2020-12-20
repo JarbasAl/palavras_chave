@@ -1,5 +1,7 @@
-from palavras_chave.utils import msec_to_sec, get_phonemes
+from palavras_chave.utils import msec_to_sec
+from phoneme_guesser import get_phonemes
 import time
+
 
 class HotWordEngine:
     """Hotword/Wakeword base class to be implemented by all wake word plugins.
@@ -15,7 +17,7 @@ class HotWordEngine:
 
         config = config or {}
         self.config = config
-        self.phonemes = config.get("phonemes") or get_phonemes(key_phrase)
+        self.phonemes = config.get("phonemes") or get_phonemes(key_phrase, lang)
         num_phonemes = len(self.phonemes.split(" "))
         phoneme_duration = msec_to_sec(config.get('phoneme_duration', 120))
         self.expected_duration = self.config.get("expected_duration") or \

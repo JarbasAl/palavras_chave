@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from palavras_chave.exceptions import ModelNotFound, PhonemesNotProvided
+from palavras_chave.exceptions import ModelNotFound
 from palavras_chave.modules import HotWordEngine
 import os
 from os.path import join, dirname
@@ -28,8 +28,6 @@ class PocketsphinxHotWord(HotWordEngine):
         from pocketsphinx import Decoder
 
         # set default values if missing from config
-        if not self.lang.startswith("en") and not self.config.get("phonemes"):
-            raise PhonemesNotProvided
         self.hmm = self.config.get("hmm")
         if not self.hmm and self.lang.startswith("en"):
             self.hmm = self.get_default_english_model()
